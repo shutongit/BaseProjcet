@@ -1,0 +1,247 @@
+//
+//  BaseMapViewController.m
+//  BaseProject
+//
+//  Created by 舒通 on 2017/9/8.
+//  Copyright © 2017年 舒通. All rights reserved.
+//
+
+#import "BaseMapViewController.h"
+#import <MAMapKit/MAMapKit.h>
+#import <AMapFoundationKit/AMapFoundationKit.h>
+#import <AMapLocationKit/AMapLocationKit.h>
+#import "BaseMapNavView.h"
+#import "BaseMapAddressTableViewCell.h"
+#import "BaseSignMapHeadView.h"
+#import "BaseMapSignView.h"
+#import "BaseMapSignTimeAndAddressTableViewCell.h"
+
+
+@interface BaseMapViewController ()<MAMapViewDelegate,AMapLocationManagerDelegate,UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic, strong) MAMapView *mapView;
+@property (nonatomic, strong) AMapLocationManager *locationManager;
+@property (nonatomic, copy) NSString *addressString;
+@property (nonatomic, strong) NSMutableArray *signArray;//签到数量
+@end
+
+@implementation BaseMapViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self createTaableView];
+    [self createNav];
+    [self createSignView];
+    [self createMapView];
+    [self createCircle];
+    [self configureLocation];
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    //    [self.locationManager stopUpdatingLocation];
+}
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    
+}
+- (void)dealloc
+{
+    [self.locationManager stopUpdatingLocation];
+}
+
+#pragma mark  ************** tableView data **************
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return section == 0 ? 2 : self.signArray.count;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        
+        BaseMapAddressTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BaseMapAddressTableViewCell"];
+        NSArray *imageArray = @[@"dingwei",@"MapTime"];
+        cell.iconImage.image = [UIImage imageNamed:imageArray[indexPath.row]];
+        if (self.addressString) {
+            if (indexPath.row == 0) {
+                cell.message.text = self.addressString;
+            }
+        }
+        return cell;
+    } else {
+        BaseMapSignTimeAndAddressTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BaseMapSignTimeAndAddressTableViewCell"];
+        cell.addressLabel.text = self.signArray[indexPath.row];
+        return cell;
+    }
+}
+
+#pragma mark  ************** tableView delegate **************
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return indexPath.section == 0 ? 44 : 100;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return section == 0 ? 0 : 40;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    if (section == 1) {
+        BaseSignMapHeadView *headView = [[NSBundle mainBundle]loadNibNamed:@"BaseSignMapHeadView" owner:nil options:nil].firstObject;
+        return headView;
+    }
+    return nil;
+}
+#pragma mark  ************** MaMapView delegate **************
+- (MAOverlayRenderer *)mapView:(MAMapView *)mapView rendererForOverlay:(id <MAOverlay>)overlay
+{
+    if ([overlay isKindOfClass:[MACircle class]])
+    {
+        
+        MACircleRenderer *circleRenderer = [[MACircleRenderer alloc] initWithCircle:(MACircle *)overlay];
+        
+        circleRenderer.lineWidth    = 5.f;
+        circleRenderer.strokeColor  = [UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:0.8];
+        circleRenderer.fillColor    = [UIColor colorWithRed:1.0 green:0.8 blue:0.0 alpha:0.8];
+        return circleRenderer;
+    }
+    return nil;
+}
+
+#pragma mark  ************** AMapLocationManagerDelegate **************
+
+- (void)amapLocationManager:(AMapLocationManager *)manager didUpdateLocation:(CLLocation *)location reGeocode:(AMapLocationReGeocode *)reGeocode
+{
+    _mapView.centerCoordinate = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude);//设置中心点
+    //1.将两个经纬度点转成投影点
+    MAMapPoint point1 = MAMapPointForCoordinate(CLLocationCoordinate2DMake(31.12552951, 121.53621338));
+    MAMapPoint point2 = MAMapPointForCoordinate(CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude));
+    //2.计算距离
+    CLLocationDistance distance = MAMetersBetweenMapPoints(point1,point2) - 500;
+    if (distance > 0) {
+        DLog(@"距离签到地点还有 -- %f",distance);
+    }
+    DLog(@"location:{lat:%f; lon:%f; accuracy:%f}", location.coordinate.latitude, location.coordinate.longitude, location.horizontalAccuracy);
+    if (reGeocode)
+    {
+        self.addressString = [NSString isBlankString:reGeocode.formattedAddress] ? reGeocode.city : reGeocode.formattedAddress;
+        [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationNone];
+        NSLog(@"reGeocode:%@", reGeocode);
+    }
+}
+#pragma mark  ************** 配置定位信息 **************
+- (void)configureLocation
+{
+    self.locationManager = [[AMapLocationManager alloc] init];
+    self.locationManager.delegate = self;
+    [self.locationManager setLocatingWithReGeocode:YES];
+    [self.locationManager startUpdatingLocation];
+}
+
+#pragma mark  ************** createUI **************
+- (void)createTaableView
+{
+    self.tableView.y = NavHeight;
+    self.tableView.height = KScreenHeight - NavHeight - 100;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    [self.view addSubview:self.tableView];
+    [self.tableView registerNib:[UINib nibWithNibName:@"BaseMapAddressTableViewCell" bundle:nil] forCellReuseIdentifier:@"BaseMapAddressTableViewCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"BaseMapSignTimeAndAddressTableViewCell" bundle:nil] forCellReuseIdentifier:@"BaseMapSignTimeAndAddressTableViewCell"];
+}
+- (void)createNav
+{
+    BaseMapNavView *navView = [[NSBundle mainBundle]loadNibNamed:@"BaseMapNavView" owner:nil options:nil].firstObject;
+    navView.frame = CGRectMake(0, 0, KScreenWidth, NavHeight);
+    kWS(weakSelf);
+    navView.clickBack = ^{
+        [weakSelf dismissViewControllerAnimated:YES completion:nil];
+    };
+    [self.view addSubview:navView];
+    
+}
+- (void)createSignView
+{
+    BaseMapSignView *signView = [[NSBundle mainBundle]loadNibNamed:@"BaseMapSignView" owner:nil options:nil].firstObject;
+    signView.frame = CGRectMake(0, KScreenHeight - 100, KScreenWidth, 100);
+    kWS(weakSelf);
+    signView.clickSign = ^{
+        DLog(@"签到");
+        if (![NSString isBlankString:weakSelf.addressString]) {
+           [weakSelf.signArray addObject:weakSelf.addressString];
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    };
+    [self.view addSubview:signView];
+}
+- (void)createMapView
+{
+    ///地图需要v4.5.0及以上版本才必须要打开此选项（v4.5.0以下版本，需要手动配置info.plist）
+    [AMapServices sharedServices].enableHTTPS = YES;
+    
+    ///初始化地图
+    _mapView = [[MAMapView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, 200)];
+    _mapView.delegate = self;
+    ///把地图添加至view
+//    [self.view addSubview:_mapView];
+    self.tableView.tableHeaderView = _mapView;
+    [self configureMapMessage];
+    
+}
+//配置基本信息
+- (void)configureMapMessage
+{
+    [_mapView setZoomLevel:16.1 animated:YES];
+    ///如果您需要进入地图就显示定位小蓝点，则需要下面两行代码
+    _mapView.showsUserLocation = YES;
+    _mapView.userTrackingMode = MAUserTrackingModeFollow;
+    
+    //    地图logo控件
+    //    _mapView.logoCenter = CGPointMake(CGRectGetWidth(self.view.bounds)-55, 450);
+    
+    //    _mapView.showsCompass= YES; // 设置成NO表示关闭指南针；YES表示显示指南针
+    
+    //    _mapView.compassOrigin= CGPointMake(_mapView.compassOrigin.x, 22); //设置指南针位置
+    
+    //    _mapView.showsScale= YES;  //设置成NO表示不显示比例尺；YES表示显示比例尺
+    
+    //    _mapView.scaleOrigin= CGPointMake(_mapView.scaleOrigin.x, 22);  //设置比例尺位置
+    
+    _mapView.rotateEnabled= NO;    //NO表示禁用旋转手势，YES表示开启
+    
+    _mapView.rotateCameraEnabled= NO;    //NO表示禁用倾斜手势，YES表示开启
+    
+}
+//指定屏幕中心点的手势操作
+- (void)configureMapCurrentCenter
+{
+    
+    MAMapStatus *status = [self.mapView getMapStatus];
+    status.screenAnchor = CGPointMake(0.5, 0.76);//地图左上为(0,0)点，右下为(1,1)点。
+    [self.mapView setMapStatus:status animated:NO];
+}
+//绘制圆
+- (void)createCircle
+{
+    //构造圆
+    MACircle *circle = [MACircle circleWithCenterCoordinate:CLLocationCoordinate2DMake(31.12552951, 121.53621338) radius:50];
+    
+    //在地图上添加圆
+    [_mapView addOverlay: circle];
+}
+
+#pragma mark  ************** setter / getter **************
+- (NSMutableArray *)signArray
+{
+    if (!_signArray) {
+        _signArray = [NSMutableArray arrayWithCapacity:0];
+    }
+    return _signArray;
+}
+
+@end

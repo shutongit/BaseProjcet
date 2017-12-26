@@ -1,0 +1,194 @@
+//
+//  TabBarItem.m
+//  BaseProject
+//
+//  Created by 舒通 on 2017/8/30.
+//  Copyright © 2017年 舒通. All rights reserved.
+//
+
+#import "BaseTabBarItem.h"
+#import "TabBarBadge.h"
+
+@interface BaseTabBarItem ()
+
+@property (nonatomic, strong) TabBarBadge *tabBarBadge;
+
+@end
+@implementation BaseTabBarItem
+
+#pragma mark  ************** life cycle **************
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.imageView.contentMode = UIViewContentModeCenter;
+        self.titleLabel.textAlignment = NSTextAlignmentCenter;
+        self.tabBarBadge = [[TabBarBadge alloc]init];
+        [self addSubview:self.tabBarBadge];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [self.tabBarItem removeObserver:self forKeyPath:@"badgeValue"];
+    [self.tabBarItem removeObserver:self forKeyPath:@"title"];
+    [self.tabBarItem removeObserver:self forKeyPath:@"image"];
+    [self.tabBarItem removeObserver:self forKeyPath:@"selectedImage"];
+//    [kNotificationCenter removeObserver:self];
+}
+
+
+#pragma mark  ************** public method **************
+- (instancetype)initWithItemImageRatio:(CGFloat)itemImageRatio
+{
+    self = [super init];
+    if (self) {
+        self.itemImageRatio = itemImageRatio;
+    }
+    return self;
+}
+
+
+#pragma mark  ************** setter / getter **************
+//字号
+- (void)setItemTitleFont:(UIFont *)itemTitleFont {
+    
+    _itemTitleFont = itemTitleFont;
+    
+    self.titleLabel.font = itemTitleFont;
+}
+//字体颜色
+- (void)setItemTitleColor:(UIColor *)itemTitleColor {
+    
+    _itemTitleColor = itemTitleColor;
+    
+    [self setTitleColor:itemTitleColor forState:UIControlStateNormal];
+}
+//选中的字体颜色
+- (void)setSelectedItemTitleColor:(UIColor *)selectedItemTitleColor {
+    
+    _selectedItemTitleColor = selectedItemTitleColor;
+    
+    [self setTitleColor:selectedItemTitleColor forState:UIControlStateSelected];
+}
+//红点的字号
+- (void)setBadgeTitleFont:(UIFont *)badgeTitleFont {
+    
+    _badgeTitleFont = badgeTitleFont;
+    
+    self.tabBarBadge.badgeTitleFont = badgeTitleFont;
+}
+//红点的个数
+- (void)setTabBarItemCount:(NSInteger)tabBarItemCount {
+    
+    _tabBarItemCount = tabBarItemCount;
+    
+    self.tabBarBadge.tabBarItemCount = self.tabBarItemCount;
+}
+//设置TabBar元素内容
+- (void)setTabBarItem:(UITabBarItem *)tabBarItem {
+    
+    _tabBarItem = tabBarItem;
+    [self observeValueForKeyPath:nil ofObject:nil change:nil context:nil];
+    
+    [tabBarItem addObserver:self forKeyPath:@"badgeValue" options:0 context:nil];
+    [tabBarItem addObserver:self forKeyPath:@"title" options:0 context:nil];
+    [tabBarItem addObserver:self forKeyPath:@"image" options:0 context:nil];
+    [tabBarItem addObserver:self forKeyPath:@"selectedImage" options:0 context:nil];
+    
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    
+    [self setTitle:self.tabBarItem.title forState:UIControlStateNormal];
+    [self setImage:self.tabBarItem.image forState:UIControlStateNormal];
+    [self setImage:self.tabBarItem.selectedImage forState:UIControlStateSelected];
+    
+    self.tabBarBadge.badgeValue = self.tabBarItem.badgeValue;
+}
+
+#pragma mark - Reset TabBarItem
+
+- (CGRect)imageRectForContentRect:(CGRect)contentRect {
+    
+    CGFloat imageX = 0.f;
+    CGFloat imageY = 0.f;
+    CGFloat imageW = contentRect.size.width;
+//    CGFloat imageH = contentRect.size.height * self.itemImageRatio;
+    
+    return CGRectMake(imageX, imageY, imageW, contentRect.size.height - 20.0f);
+}
+
+- (CGRect)titleRectForContentRect:(CGRect)contentRect {
+    
+    CGFloat titleX = 0.f;
+    CGFloat titleW = contentRect.size.width;
+//    CGFloat titleY = contentRect.size.height * self.itemImageRatio + (self.itemImageRatio == 1.0f ? 100.0f : -5.0f);
+//    CGFloat titleH = contentRect.size.height - titleY;
+//    DLog(@"title height == %f == %f",self.itemImageRatio,titleH);
+//    return CGRectMake(titleX, titleY, titleW, titleH);
+    CGFloat titleY = contentRect.size.height - 20.0f;
+    CGFloat titleH = contentRect.size.height - titleY;
+    DLog(@"title height == %f == %f",self.itemImageRatio,titleH);
+    return CGRectMake(titleX, titleY, titleW, 20.0f);
+}
+
+- (void)setHighlighted:(BOOL)highlighted {}
+
+
+//- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+//{
+//    UIView *touchView = self;
+//    
+//    if
+//        ([self pointInside:point withEvent:event]) {
+//            
+//            for
+//                (UIView *subView in self.subviews) {
+//                    
+//                    //注意，这里有坐标转换，将point点转换到subview中，好好理解下
+//                    
+//                    CGPoint subPoint = CGPointMake(point.x - subView.frame.origin.x,
+//                                                   
+//                                                   point.y - subView.frame.origin.y);
+//                    
+//                    UIView *subTouchView = [subView hitTest:subPoint withEvent:event];
+//                    
+//                    if
+//                        (subTouchView) {
+//                            
+//                            //找到touch事件对应的view，停止遍历
+//                            
+//                            touchView = subTouchView;
+//                            
+//                            break;
+//                            
+//                        }
+//                    
+//                }
+//            
+//        }else{
+//            
+//            //此点不在该View中，那么连遍历也省了，直接返回nil
+//            
+//            touchView = nil;
+//            
+//        }
+//    
+//    
+//    
+//    return
+//    touchView;
+//    
+//}
+//
+//
+//
+//- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event{
+//    BOOL isOk = CGRectContainsPoint(self.bounds, point);
+//    return isOk;
+//    
+//}
+
+@end

@@ -1,0 +1,22 @@
+//
+//  BasePch.pch
+//  BaseProject
+//
+//  Created by 舒通 on 2017/8/30.
+//  Copyright © 2017年 舒通. All rights reserved.
+//
+
+#ifndef BasePch_pch
+#define BasePch_pch
+
+//全局宏
+#import "BaseHelper.h"
+#import "BaseConfigure.h"
+#import "CommonMacros.h"
+#import "FontAndColorMacros.h"
+#import "ThridMacros.h"
+#import "URLMacros.h"
+
+
+
+#endif /* BasePch_pch */

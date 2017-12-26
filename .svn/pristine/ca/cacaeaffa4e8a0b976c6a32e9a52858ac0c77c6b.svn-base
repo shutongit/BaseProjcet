@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="BaseScheduleHeadView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="207"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oof-PK-MHX" userLabel="backView">
+                    <rect key="frame" x="50" y="30" width="275" height="177"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="18/" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dbo-Sl-eog" userLabel="dayLabel">
+                            <rect key="frame" x="96" y="70.5" width="41.5" height="36"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2017/09" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWd-nf-wny" userLabel="timeLabel">
+                            <rect key="frame" x="138" y="70" width="56.5" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZXi-0H-YsI" userLabel="centerView">
+                            <rect key="frame" x="137.5" y="0.0" width="0.5" height="177"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="0.5" id="z8Q-2u-Qmy"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="星期一" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aaw-tn-pX3" userLabel="weekLabel">
+                            <rect key="frame" x="138" y="88" width="46" height="18"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="0.33104744188625379" blue="0.1402606801944154" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="aaw-tn-pX3" secondAttribute="trailing" constant="10" id="4pi-Zs-xzp"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VWd-nf-wny" secondAttribute="trailing" constant="10" id="9Mc-6i-yCE"/>
+                        <constraint firstItem="dbo-Sl-eog" firstAttribute="centerY" secondItem="Oof-PK-MHX" secondAttribute="centerY" id="9xV-Z5-L2W"/>
+                        <constraint firstItem="VWd-nf-wny" firstAttribute="leading" secondItem="ZXi-0H-YsI" secondAttribute="trailing" id="Bwp-79-4go"/>
+                        <constraint firstItem="aaw-tn-pX3" firstAttribute="top" secondItem="VWd-nf-wny" secondAttribute="bottom" id="JM5-vq-2cs"/>
+                        <constraint firstItem="ZXi-0H-YsI" firstAttribute="leading" secondItem="dbo-Sl-eog" secondAttribute="trailing" id="LDO-s8-af3"/>
+                        <constraint firstItem="aaw-tn-pX3" firstAttribute="leading" secondItem="VWd-nf-wny" secondAttribute="leading" id="YiO-mS-VLr"/>
+                        <constraint firstItem="VWd-nf-wny" firstAttribute="top" secondItem="dbo-Sl-eog" secondAttribute="top" id="aGf-oB-IX2"/>
+                        <constraint firstItem="dbo-Sl-eog" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Oof-PK-MHX" secondAttribute="leading" constant="10" id="aXJ-5K-Kgq"/>
+                        <constraint firstItem="ZXi-0H-YsI" firstAttribute="top" secondItem="Oof-PK-MHX" secondAttribute="top" id="jmY-sw-Ogo"/>
+                        <constraint firstItem="ZXi-0H-YsI" firstAttribute="centerX" secondItem="Oof-PK-MHX" secondAttribute="centerX" id="o3m-8O-Nlg"/>
+                        <constraint firstAttribute="bottom" secondItem="ZXi-0H-YsI" secondAttribute="bottom" id="p6r-YT-sIv"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="0.81913316608533115" blue="0.76610277270743243" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <constraints>
+                <constraint firstItem="Oof-PK-MHX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="30" id="9gT-5d-gxz"/>
+                <constraint firstAttribute="trailing" secondItem="Oof-PK-MHX" secondAttribute="trailing" constant="50" id="CtU-08-PwN"/>
+                <constraint firstAttribute="bottom" secondItem="Oof-PK-MHX" secondAttribute="bottom" id="N8X-bs-vhZ"/>
+                <constraint firstItem="Oof-PK-MHX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="d7w-Mc-8m2"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="backView" destination="Oof-PK-MHX" id="nD9-RV-Pxc"/>
+                <outlet property="dayLabel" destination="dbo-Sl-eog" id="gfN-2S-Exl"/>
+                <outlet property="timeLabel" destination="VWd-nf-wny" id="ol4-gZ-0tn"/>
+                <outlet property="weekLabel" destination="aaw-tn-pX3" id="amN-Qw-4qw"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="249.5"/>
+        </view>
+    </objects>
+</document>

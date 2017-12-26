@@ -1,0 +1,33 @@
+//
+//  ThridMacros.h
+//  BaseProject
+//
+//  Created by 舒通 on 2017/9/1.
+//  Copyright © 2017年 舒通. All rights reserved.
+//
+
+// 第三方配置
+#ifndef ThridMacros_h
+#define ThridMacros_h
+
+// 友盟统计
+#define UMengKey                @"59a8baa37666136a8d0020d2"
+#define UmengURL                @"http://www.umeng.com/social"
+
+//微信
+#define kAppKey_Wechat          @"wxb601f7144eddbb68"
+#define kSecret_Wechat          @"36b3afb114ee0927a2b2b42026c2b50a"
+
+// 腾讯
+//#define kAppID_Tencent                  @"1106313699"
+//#define kAppKey_Tencent         @"ikYfHICP6FzFIdVu"
+#define kAppKey_Tencent          @"1106313699"
+
+
+//极光
+#define KJpushKey               @"c8648677342b0ac345163213"
+
+//高德key
+#define GDMapKey                @"b689c2ea9632e8a2f5482c7a7cabb341";
+
+#endif /* ThridMacros_h */

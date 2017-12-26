@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="BaseBaseApplyForCollectionReusableView">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="考勤申请" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gSD-Nu-hku" userLabel="message">
+                    <rect key="frame" x="10" y="16" width="61.5" height="18"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                    <color key="textColor" red="0.1215686275" green="0.1215686275" blue="0.1215686275" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pullDown" translatesAutoresizingMaskIntoConstraints="NO" id="4oP-34-O0L" userLabel="iconImage">
+                    <rect key="frame" x="295" y="15" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="55t-OZ-zPz"/>
+                        <constraint firstAttribute="height" constant="20" id="sSz-Qu-aSf"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DZr-fM-THI" userLabel="lineView">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.80000000000000004" id="7E3-zQ-tf4"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="4oP-34-O0L" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="1Xh-Lz-Ru3"/>
+                <constraint firstItem="gSD-Nu-hku" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="9C7-Ee-Rvj"/>
+                <constraint firstItem="DZr-fM-THI" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="Lw9-MK-DjJ"/>
+                <constraint firstAttribute="trailing" secondItem="4oP-34-O0L" secondAttribute="trailing" constant="5" id="VH1-ZQ-SJO"/>
+                <constraint firstAttribute="trailing" secondItem="DZr-fM-THI" secondAttribute="trailing" id="Wvc-Ei-ge3"/>
+                <constraint firstItem="DZr-fM-THI" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" id="oxP-Tg-3f8"/>
+                <constraint firstItem="gSD-Nu-hku" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="10" id="ssg-WR-q1u"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gSD-Nu-hku" secondAttribute="trailing" constant="25" id="zoY-zH-uCy"/>
+            </constraints>
+            <connections>
+                <outlet property="iconImage" destination="4oP-34-O0L" id="ato-zy-Ned"/>
+                <outlet property="messageLabel" destination="gSD-Nu-hku" id="O6z-W4-2tc"/>
+            </connections>
+        </collectionReusableView>
+    </objects>
+    <resources>
+        <image name="pullDown" width="16" height="16"/>
+    </resources>
+</document>

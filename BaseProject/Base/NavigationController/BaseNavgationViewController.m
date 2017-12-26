@@ -1,0 +1,143 @@
+//
+//  BaseNavgationViewController.m
+//  BaseProject
+//
+//  Created by 舒通 on 2017/8/30.
+//  Copyright © 2017年 舒通. All rights reserved.
+//
+
+#import "BaseNavgationViewController.h"
+
+@interface BaseNavgationViewController ()<UINavigationControllerDelegate,UIGestureRecognizerDelegate>
+
+@property (nonatomic, weak) id popDelegate;
+
+@property (nonatomic,strong) UIPercentDrivenInteractiveTransition *interactivePopTransition;//转场动画
+@property (nonatomic,strong) UIScreenEdgePanGestureRecognizer *popRecognizer;//边缘手势
+@property(nonatomic,assign) BOOL isSystemSlidBack;//是否开启系统右滑返回
+
+@end
+
+@implementation BaseNavgationViewController
+//APP生命周期中 只会执行一次
++ (void)initialize
+{
+    UINavigationBar *navBar = [UINavigationBar appearance];
+    [navBar setBarTintColor:CNavBgColor];
+    [navBar setTintColor:CNavBgFontColor];
+    [navBar setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:CNavBgFontColor,NSForegroundColorAttributeName,[UIFont systemFontOfSize:18],NSFontAttributeName, NULL]];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.popDelegate = self.interactivePopGestureRecognizer.delegate;
+    self.delegate = self;
+    self.interactivePopGestureRecognizer.enabled = YES;
+    _popRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(handleNavigationTransition:)];
+    _popRecognizer.edges = UIRectEdgeLeft;
+    [_popRecognizer setEnabled:NO];
+    [self.view addGestureRecognizer:_popRecognizer];
+}
+#pragma mark  ************** public method **************
+- (BOOL)popToAppointViewController:(NSString *)ClassName animated:(BOOL)animated
+{
+    id vc = [self getCurrentViewControllerClass:ClassName];
+    if (vc != nil && [vc isKindOfClass:[UIViewController class]]) {
+        [self popToAppointViewController:vc animated:animated];
+        return YES;
+    }
+    return NO;
+}
+/*!
+ *  获得当前导航器显示的视图
+ *
+ *  @param ClassName 要获取的视图的名称
+ *
+ *  @return 成功返回对应的对象，失败返回nil;
+ */
+-(instancetype)getCurrentViewControllerClass:(NSString *)ClassName
+{
+    Class classObj = NSClassFromString(ClassName);
+    for (id vc in self.viewControllers) {
+        if([vc isMemberOfClass:classObj])
+        {
+            return vc;
+        }
+    }
+    return nil;
+}
+
+#pragma mark  ************** private method **************
+
+- (void)handleNavigationTransition:(UIScreenEdgePanGestureRecognizer*)recognizer
+{
+    CGFloat progress = [recognizer translationInView:self.view].x / (self.view.bounds.size.width);
+    //    progress = MIN(1.0, MAX(0.0, progress));
+    NSLog(@"右划progress %.2f",progress);
+    
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        self.interactivePopTransition = [[UIPercentDrivenInteractiveTransition alloc] init];
+        [self popViewControllerAnimated:YES];
+    }
+    else if (recognizer.state == UIGestureRecognizerStateChanged) {
+        [self.interactivePopTransition updateInteractiveTransition:progress];
+    }
+    else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled) {
+        CGPoint velocity = [recognizer velocityInView:recognizer.view];
+        
+        if (progress > 0.5 || velocity.x >100) {
+            [self.interactivePopTransition finishInteractiveTransition];
+        }
+        else {
+            [self.interactivePopTransition cancelInteractiveTransition];
+        }
+        self.interactivePopTransition = nil;
+    }
+}
+
+#pragma mark  ************** NavgationControllerDelegate **************
+//解决手势失效问题
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    self.interactivePopGestureRecognizer.delegate = self;
+    
+    if (_isSystemSlidBack) {
+        self.interactivePopGestureRecognizer.enabled = YES;
+        [_popRecognizer setEnabled:NO];
+    } else {
+        self.interactivePopGestureRecognizer.enabled = NO;
+        [_popRecognizer setEnabled:YES];
+    }
+}
+//push时隐藏tabbar
+- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if (self.viewControllers.count > 0) {
+        
+        viewController.hidesBottomBarWhenPushed = YES;
+    }
+    [super pushViewController:viewController animated:animated];
+}
+//navgation的显示与隐藏
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated
+{
+    if ([viewController isKindOfClass:[BaseRootViewController class]]) {
+        BaseRootViewController *vc = (BaseRootViewController *)viewController;
+        [vc.navigationController setNavigationBarHidden:vc.isHidenNaviBar animated:animated];
+    }
+}
+//改变状态栏  只有在导航控制器里面也实现 才能实现效果
+-(UIViewController *)childViewControllerForStatusBarStyle{
+    return self.topViewController;
+}
+
+- (id<UIViewControllerInteractiveTransitioning>)navigationController:(UINavigationController *)navigationController
+                         interactionControllerForAnimationController:(id<UIViewControllerAnimatedTransitioning>)animationController
+{
+    if (!self.interactivePopTransition) { return nil; }
+    return self.interactivePopTransition;
+}
+
+
+@end

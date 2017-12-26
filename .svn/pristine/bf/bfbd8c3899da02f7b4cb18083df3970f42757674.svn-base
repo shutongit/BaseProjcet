@@ -1,0 +1,163 @@
+//
+//  BaseMessageViewController.m
+//  BaseProject
+//
+//  Created by 舒通 on 2017/8/30.
+//  Copyright © 2017年 舒通. All rights reserved.
+//
+
+#import "BaseMessageViewController.h"
+#import "AddressBookHelper.h"
+#import "BaseDepartmentTableViewCell.h"
+#import "BaseMessageOrganizeTableViewCell.h"
+#import "BaseMessageDepartmentHeadView.h"
+#import "BaseMessageBannerView.h"
+#import "TitleScrollView.h"
+#import "BaseSearchBarView.h"
+
+@interface BaseMessageViewController ()<UITableViewDelegate,UITableViewDataSource>
+
+@property (nonatomic, assign) BOOL isPull;
+@property (nonatomic, assign) CGFloat bannerHeight;
+@end
+
+static NSString *cellID = @"cellID";
+
+@implementation BaseMessageViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    self.bannerHeight = 0.0f;
+    [self createNavbarButtonView];
+    [self addrightButton];
+    [self addSearchBarView];
+    [self createUI];
+    [self replaceBannerView];
+}
+
+#pragma mark  ************** touch event **************
+- (void)titleButtonAction:(UIButton *)aSender
+{
+    NSMutableArray *array = [AddressBookHelper callbackAddressBook];
+    DLog(@"array == %@",array);
+    
+}
+#pragma mark  ************** load data **************
+- (void)loadData
+{
+    [self.dataSource addObject:@"通讯录"];
+    [self.tableView reloadData];
+}
+
+#pragma mark  ************** tableview data **************
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 2;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (section == 1) {
+        return self.isPull ? 0 : 1;
+    }
+    return 1;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 0) {
+        BaseMessageOrganizeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BaseMessageOrganizeTableViewCell" forIndexPath:indexPath];
+        return cell;
+    } else {
+        BaseDepartmentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"BaseDepartmentTableViewCell" forIndexPath:indexPath];
+        return cell;
+    }
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    kWS(weakSelf);
+    if (section == 1) {
+        BaseMessageDepartmentHeadView *view = [[[NSBundle mainBundle]loadNibNamed:@"BaseMessageDepartmentHeadView" owner:nil options:nil] firstObject];
+        view.frame = CGRectMake(0, 0, KScreenWidth, 20.0f);
+        view.clickHeadView = ^(BOOL isPull) {
+            weakSelf.isPull = !weakSelf.isPull;
+            [weakSelf.tableView reloadData];
+        };
+        return view;
+    }
+    return nil;
+}
+#pragma mark  ************** tableview delegate **************
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60.0f;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return section == 1 ? 20.0f : self.bannerHeight;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+#pragma mark  ************** 创建视图 **************
+- (void)createUI
+{
+    self.tableView.y += 35;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+//    [self.tableView setContentInset:UIEdgeInsetsMake(80, 0, 0, 0)];
+    [self.tableView registerNib:[UINib nibWithNibName:@"BaseMessageOrganizeTableViewCell" bundle:nil] forCellReuseIdentifier:@"BaseMessageOrganizeTableViewCell"];
+    [self.tableView registerNib:[UINib nibWithNibName:@"BaseDepartmentTableViewCell" bundle:nil] forCellReuseIdentifier:@"BaseDepartmentTableViewCell"];
+}
+//nav按钮
+- (void)addrightButton
+{
+    [self addNavigationItemWithTitles:@[@"通讯录"] isLeft:NO target:self tags:nil];
+}
+//广告视图
+- (void)replaceBannerView
+{
+    kWS(weakSelf);
+    BaseMessageBannerView *bannerView = [[[NSBundle mainBundle]loadNibNamed:@"BaseMessageBannerView" owner:nil options:nil]firstObject];
+    bannerView.frame = CGRectMake(0, 0, KScreenWidth, 80);
+    bannerView.clickCancel = ^{
+//        [weakSelf.tableView setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
+        weakSelf.tableView.tableHeaderView = nil;
+        [weakSelf.tableView reloadData];
+    };
+    self.tableView.tableHeaderView = bannerView;
+//    [self.tableView addSubview:bannerView];
+    
+}
+//导航栏标题视图
+- (void)createNavbarButtonView
+{
+    self.navigationItem.title = @"";
+    
+    TitleScrollView *titleView = [[TitleScrollView alloc]initWithFrame:CGRectMake((KScreenWidth - 120 )/2 , 10, 120, 30) TitleArray:@[@"同事",@"客户"] selectedIndex:0 scrollEnable:NO lineEqualWidth:YES isSelect:YES selectColor:[UIColor whiteColor] defaultColor:[UIColor blackColor] SelectBlock:^(NSInteger index) {
+        DLog(@"联系人选中了 index = %ld",index);
+    }];
+//    titleView.selectTitleColor = [UIColor whiteColor];
+//    titleView.defautlTitleColor = [UIColor blackColor];
+    BSViewsBorder(titleView, 30/2, 0.8, CFontColor2);
+    titleView.backgroundColor = [UIColor whiteColor];
+    
+    [self.navigationController.navigationBar addSubview:titleView];
+}
+- (void)addSearchBarView
+{
+    BaseSearchBarView *searchBar = [[BaseSearchBarView alloc]initWithFrame:CGRectMake(0, NavHeight, KScreenWidth, 35)];
+    [self.view addSubview:searchBar];
+}
+
+#pragma mark  ************** setter / getter  **************
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+@end

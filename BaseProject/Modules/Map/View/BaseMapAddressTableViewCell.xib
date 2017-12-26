@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="BaseMapAddressTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8OX-m0-kiL" userLabel="iconImage">
+                        <rect key="frame" x="10" y="12" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="lLb-t1-9q9"/>
+                            <constraint firstAttribute="width" constant="20" id="xJL-1b-nA5"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="上海市" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ClE-dD-1gb" userLabel="message">
+                        <rect key="frame" x="40" y="1" width="40" height="41.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="8OX-m0-kiL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="695-rG-zAr"/>
+                    <constraint firstItem="ClE-dD-1gb" firstAttribute="leading" secondItem="8OX-m0-kiL" secondAttribute="trailing" constant="10" id="Vow-Bn-C1U"/>
+                    <constraint firstItem="8OX-m0-kiL" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="aUU-nP-e7Q"/>
+                    <constraint firstItem="ClE-dD-1gb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="bum-xM-HR1"/>
+                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ClE-dD-1gb" secondAttribute="trailing" constant="10" id="nhs-a4-Zv3"/>
+                    <constraint firstItem="ClE-dD-1gb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="1" id="uoc-6M-FRJ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="iconImage" destination="8OX-m0-kiL" id="DYa-63-jXW"/>
+                <outlet property="message" destination="ClE-dD-1gb" id="o7O-LU-UJH"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>
