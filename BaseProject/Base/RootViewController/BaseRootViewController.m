@@ -30,14 +30,22 @@
     [super viewDidLoad];
     self.view.backgroundColor =[UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+    UIImage *navImage = [self imageWithImageSimple:[UIImage imageNamed:@"navBackground"] scaledToSize:CGSizeMake(KScreenWidth, 44)];
+    [self.navigationController.navigationBar setBackgroundImage:navImage forBarMetrics:UIBarMetricsDefault];
     //是否显示返回按钮
     self.isShowLiftBack = YES;
     //隐藏nav黑色的线
     self.isHideBarbackground = YES;
     //默认导航栏样式：黑字
     self.StatusBarStyle = UIStatusBarStyleDefault;
+    
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
 }
+
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
 }
@@ -206,14 +214,11 @@
     //下面判断的意义是 当VC所在的导航控制器中的VC个数大于1 或者 是present出来的VC时，才展示返回按钮，其他情况不展示
     if (isShowLiftBack && ( VCCount > 1 || self.navigationController.presentingViewController != nil)) {
         self.isBackButton = YES;
-        UIButton * btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [btn setImage:[UIImage imageNamed:@"homeBack"] forState:UIControlStateNormal];
-        btn.frame = CGRectMake(0, 0, 30, 30);
-        [btn setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
-        [btn addTarget:self action:@selector(backBtnClicked) forControlEvents:UIControlEventTouchUpInside];
-        [btn sizeToFit];
-        UIBarButtonItem * item = [[UIBarButtonItem alloc] initWithCustomView:btn];
-        self.navigationItem.leftBarButtonItem = item;
+        
+        UIBarButtonItem *backBarbutton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"homeBack"] style:UIBarButtonItemStylePlain target:self action:@selector(backBtnClicked)];
+        backBarbutton.tintColor = [UIColor whiteColor];
+        [[UINavigationBar appearance]setTintColor:[UIColor whiteColor]];
+        self.navigationItem.leftBarButtonItem = backBarbutton;
         
     } else {
         self.navigationItem.hidesBackButton = YES;
@@ -262,10 +267,20 @@
 - (void)alertWithMessage:(NSString *)message
              cancelTitle:(NSString *)cancelTitle
             confirmTitle:(NSString *)confirmTitle
-             cancelBlock:(void (^)())cancelBlock
-            confirmBlock:(void (^)())confirmBlock
+             cancelBlock:(void (^)(void))cancelBlock
+            confirmBlock:(void (^)(void))confirmBlock
 {
     [UIAlertView showAlertViewWithTitle:@"提示" message:message cancelButtonTitle:cancelTitle confirmButtonTitle:confirmTitle onCancel:cancelBlock onConfirm:confirmBlock];
+}
+
+//切割图片
+- (UIImage *)imageWithImageSimple:(UIImage *)image scaledToSize:( CGSize )newSize
+{
+    UIGraphicsBeginImageContext(newSize);
+    [image drawInRect:CGRectMake(0 ,0 ,newSize.width, newSize.height)];
+    UIImage * newImage = UIGraphicsGetImageFromCurrentImageContext ();
+    UIGraphicsEndImageContext ();
+    return newImage;
 }
 #pragma mark  ************** 无数据视图 **************
 -(void)showNoDataImage
@@ -296,7 +311,7 @@
 - (UITableView *)tableView
 {
     if (_tableView == nil) {
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, NavHeight, KScreenWidth, KScreenHeight-NavHeight) style:UITableViewStylePlain];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth, KScreenHeight-NavHeight) style:UITableViewStylePlain];
         _tableView.tableHeaderView = [[UIView alloc]  init];
         _tableView.delegate = self;
         _tableView.dataSource = self;
@@ -311,15 +326,15 @@
         //        _tableView.contentInset = UIEdgeInsetsMake(0, 0, 30, 0);
         //        _tableView.mj_footer.ignoredScrollViewContentInsetBottom = 30;
         
-#ifdef kiOS11Before
-        
-#else
-        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-        _tableView.contentInset = UIEdgeInsetsMake(64, 0, 49, 0);
-        _tableView.scrollIndicatorInsets = _tableView.contentInset;
-#endif
-        
-        
+//#ifdef kiOS11Before
+//        
+//#else
+//        _tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+//        _tableView.contentInset = UIEdgeInsetsMake(64, 0, 49, 0);
+//        _tableView.scrollIndicatorInsets = _tableView.contentInset;
+//#endif
+//        
+//        
         _tableView.backgroundColor=CViewBgColor;
         _tableView.scrollsToTop = YES;
         _tableView.tableFooterView = [[UIView alloc] init];
@@ -337,7 +352,7 @@
     if (_collectionView == nil) {
         UICollectionViewFlowLayout *flow = [[UICollectionViewFlowLayout alloc] init];
         
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, NavHeight, KScreenWidth , KScreenHeight-NavHeight) collectionViewLayout:flow];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, KScreenWidth , KScreenHeight-NavHeight) collectionViewLayout:flow];
         
         MJRefreshNormalHeader *header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(headerRereshing)];
         header.automaticallyChangeAlpha = YES;

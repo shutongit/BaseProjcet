@@ -196,6 +196,7 @@
             case NetworkStatusTypeReachableViaWIFI:
             {
                 DLog(@"网络环境：WiFi");
+                
                 KPostNotification(KNotificationNetWorkStateChange, @YES);
             }
                 break;

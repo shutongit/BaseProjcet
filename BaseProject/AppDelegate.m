@@ -19,6 +19,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     //初始化window
     [self initWindow];
+    //初始化app服务
+    [self initService];
     //配置键盘
     [self configureKeyboardManager];
     //初始化友盟
@@ -26,20 +28,15 @@
     //初始化地图
     [self initGDMap];
     //初始化JPush
-    [self configJPush:launchOptions];
-    
-    //初始化app服务
-    [self initService];
-    
+    [self configJPush:launchOptions];    
     //初始化用户系统
     [self initUserManager];
-    
     //网络监听
     [self monitorNetworkStatus];
     
     //加载广告
 //    [BaseAppManager appStartAdver];
-    
+
     return YES;
 }
 
@@ -117,7 +114,7 @@
 }
 
 // iOS 10 Support
-- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler {
+- (void)jpushNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
     // Required
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {

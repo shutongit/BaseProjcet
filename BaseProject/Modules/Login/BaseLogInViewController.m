@@ -78,7 +78,28 @@
 //跳过登录
 - (void)skipAction
 {
-   KPostNotification(KNotificationLoginStateChange, @YES);
+    
+    NSDictionary *dict =@{
+                          @"terminalName"       : @"iPhone",
+                          @"requestKey"         : @"Login",
+                          @"terminalCode"       : @"",
+                          @"terminalResolution" : @"", //320*568
+                          @"session"            : @"",
+                          @"systemCode"         : @"",
+                          @"terminalKey"        : @"", //A1000035DD0FF7
+                          @"user"               : @"wangpy1", //@"wangpy1",
+                          //                          @"clientKey"          : @"cdmaoa",
+                          @"fields"             :@{@"Username":@"xingyx_onsite", //@"xingyx_onsite"
+                                                   @"Password":@"tkamc.39", //@"tkamc.39"
+                                                   }
+                          };
+    [BaseNetWorkServers POST:URL_main requestUrl:@"Login" parameters:dict success:^(NSDictionary *responseObject) {
+        
+    } failure:^(NSError *error) {
+        
+    }];
+//   KPostNotification(KNotificationLoginStateChange, @YES);
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

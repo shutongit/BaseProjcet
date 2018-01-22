@@ -146,7 +146,16 @@
 - (void)alertWithMessage:(NSString *)message
              cancelTitle:(NSString *)cancelTitle
             confirmTitle:(NSString *)confirmTitle
-             cancelBlock:(void (^)())cancelBlock
-            confirmBlock:(void (^)())confirmBlock;
+             cancelBlock:(void (^)(void))cancelBlock
+            confirmBlock:(void (^)(void))confirmBlock;
+
+/**
+ 切割图片
+
+ @param image 图片
+ @param newSize 新尺寸
+ @return 图片
+ */
+- (UIImage *)imageWithImageSimple:(UIImage *)image scaledToSize:( CGSize )newSize;
 
 @end

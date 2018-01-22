@@ -37,6 +37,11 @@
 		502E70AC1F6B6803007E2B44 /* BaseApplyForAskTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E70AA1F6B6803007E2B44 /* BaseApplyForAskTextFieldTableViewCell.xib */; };
 		502E70AF1F6B7EEE007E2B44 /* BaseApplyForAskForGoOutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502E70AE1F6B7EEE007E2B44 /* BaseApplyForAskForGoOutViewController.m */; };
 		502E70B21F6BA102007E2B44 /* BaseApplyForAskForWorkOverTimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 502E70B11F6BA102007E2B44 /* BaseApplyForAskForWorkOverTimeViewController.m */; };
+		50314B0120104BA1001DFC34 /* SvUDIDTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 50314AFF20104BA1001DFC34 /* SvUDIDTools.m */; };
+		50314B0520104E0D001DFC34 /* GYDes.m in Sources */ = {isa = PBXBuildFile; fileRef = 50314B0320104E0D001DFC34 /* GYDes.m */; };
+		50314B0E2010716D001DFC34 /* EncryptUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 50314B072010716C001DFC34 /* EncryptUtil.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		50314B0F2010716D001DFC34 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 50314B082010716C001DFC34 /* Utility.m */; };
+		50314B102010716D001DFC34 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 50314B0C2010716C001DFC34 /* GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		503A5BA71F623876003DF379 /* BaseSearchBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 503A5BA61F623876003DF379 /* BaseSearchBarView.m */; };
 		503A5BAB1F624024003DF379 /* BaseHomeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 503A5BA91F624024003DF379 /* BaseHomeTableViewCell.m */; };
 		503A5BAC1F624024003DF379 /* BaseHomeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 503A5BAA1F624024003DF379 /* BaseHomeTableViewCell.xib */; };
@@ -200,7 +205,7 @@
 		50E65B2F1F594D7F00A1C1CC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E65B2E1F594D7F00A1C1CC /* UIKit.framework */; };
 		50E65B311F594D8700A1C1CC /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E65B301F594D8700A1C1CC /* Security.framework */; };
 		50E65B331F594D9500A1C1CC /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E65B321F594D9500A1C1CC /* AdSupport.framework */; };
-		50E65B351F594DA000A1C1CC /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E65B341F594DA000A1C1CC /* UserNotifications.framework */; };
+		50E65B351F594DA000A1C1CC /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E65B341F594DA000A1C1CC /* UserNotifications.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		50E65B371F594DA800A1C1CC /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E65B361F594DA800A1C1CC /* libresolv.tbd */; };
 		50F648501F564C3800C083A6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F6484F1F564C3800C083A6 /* main.m */; };
 		50F648531F564C3800C083A6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F648521F564C3800C083A6 /* AppDelegate.m */; };
@@ -301,6 +306,17 @@
 		502E70AE1F6B7EEE007E2B44 /* BaseApplyForAskForGoOutViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseApplyForAskForGoOutViewController.m; sourceTree = "<group>"; };
 		502E70B01F6BA102007E2B44 /* BaseApplyForAskForWorkOverTimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseApplyForAskForWorkOverTimeViewController.h; sourceTree = "<group>"; };
 		502E70B11F6BA102007E2B44 /* BaseApplyForAskForWorkOverTimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseApplyForAskForWorkOverTimeViewController.m; sourceTree = "<group>"; };
+		50314AFF20104BA1001DFC34 /* SvUDIDTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SvUDIDTools.m; sourceTree = "<group>"; };
+		50314B0020104BA1001DFC34 /* SvUDIDTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SvUDIDTools.h; sourceTree = "<group>"; };
+		50314B0320104E0D001DFC34 /* GYDes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GYDes.m; sourceTree = "<group>"; };
+		50314B0420104E0D001DFC34 /* GYDes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GYDes.h; sourceTree = "<group>"; };
+		50314B072010716C001DFC34 /* EncryptUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EncryptUtil.m; sourceTree = "<group>"; };
+		50314B082010716C001DFC34 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		50314B092010716C001DFC34 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		50314B0A2010716C001DFC34 /* EncryptUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncryptUtil.h; sourceTree = "<group>"; };
+		50314B0B2010716C001DFC34 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		50314B0C2010716C001DFC34 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		50314B0D2010716C001DFC34 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
 		503A5BA51F623876003DF379 /* BaseSearchBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseSearchBarView.h; sourceTree = "<group>"; };
 		503A5BA61F623876003DF379 /* BaseSearchBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseSearchBarView.m; sourceTree = "<group>"; };
 		503A5BA81F624024003DF379 /* BaseHomeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseHomeTableViewCell.h; sourceTree = "<group>"; };
@@ -894,6 +910,39 @@
 				5003AE1C1F691DEC0029ABC0 /* YYModel.h */,
 			);
 			path = YYModel;
+			sourceTree = "<group>";
+		};
+		50314AFE20104BA1001DFC34 /* KeyChainUse设备号 */ = {
+			isa = PBXGroup;
+			children = (
+				50314AFF20104BA1001DFC34 /* SvUDIDTools.m */,
+				50314B0020104BA1001DFC34 /* SvUDIDTools.h */,
+			);
+			path = "KeyChainUse设备号";
+			sourceTree = "<group>";
+		};
+		50314B0220104E0D001DFC34 /* GYDes加密 */ = {
+			isa = PBXGroup;
+			children = (
+				50314B062010716C001DFC34 /* Base64Encryption */,
+				50314B0320104E0D001DFC34 /* GYDes.m */,
+				50314B0420104E0D001DFC34 /* GYDes.h */,
+			);
+			path = "GYDes加密";
+			sourceTree = "<group>";
+		};
+		50314B062010716C001DFC34 /* Base64Encryption */ = {
+			isa = PBXGroup;
+			children = (
+				50314B072010716C001DFC34 /* EncryptUtil.m */,
+				50314B082010716C001DFC34 /* Utility.m */,
+				50314B092010716C001DFC34 /* GTMBase64.h */,
+				50314B0A2010716C001DFC34 /* EncryptUtil.h */,
+				50314B0B2010716C001DFC34 /* GTMDefines.h */,
+				50314B0C2010716C001DFC34 /* GTMBase64.m */,
+				50314B0D2010716C001DFC34 /* Utility.h */,
+			);
+			path = Base64Encryption;
 			sourceTree = "<group>";
 		};
 		503A5BAD1F626C51003DF379 /* GDMapKit */ = {
@@ -1811,6 +1860,7 @@
 		50F648831F564D5D00C083A6 /* Manager管理模块 */ = {
 			isa = PBXGroup;
 			children = (
+				50314AFE20104BA1001DFC34 /* KeyChainUse设备号 */,
 				5092FEB71F6A695A004F8ABE /* MessageAlertView消息提示框 */,
 				5002B4B51F67D087000C0B73 /* AlertTableView提示类tableview */,
 				50E30FCC1F6689000002AC0D /* MHDatePicker时间选择器 */,
@@ -2010,6 +2060,7 @@
 		50F648C61F57B63D00C083A6 /* NetWork */ = {
 			isa = PBXGroup;
 			children = (
+				50314B0220104E0D001DFC34 /* GYDes加密 */,
 				50F648C71F57B65A00C083A6 /* BaseNetWorkServers.h */,
 				50F648C81F57B65A00C083A6 /* BaseNetWorkServers.m */,
 				50DE7B0C1F5C0E04004FCF7E /* AESCommonCrypto.h */,
@@ -2115,7 +2166,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Base;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "舒通";
 				TargetAttributes = {
 					50F6484A1F564C3800C083A6 = {
@@ -2318,6 +2369,7 @@
 				50F648971F56913200C083A6 /* AppDelegate+AppService.m in Sources */,
 				503A5BAB1F624024003DF379 /* BaseHomeTableViewCell.m in Sources */,
 				50F648A41F56A09A00C083A6 /* BaseTabBarItem.m in Sources */,
+				50314B0520104E0D001DFC34 /* GYDes.m in Sources */,
 				5092FEAB1F6A5309004F8ABE /* BaseApplyForAskForLevelViewController.m in Sources */,
 				50C4AAAD1F665AD600DA98B8 /* BaseMineDataViewController.m in Sources */,
 				50C4AAB11F665B9B00DA98B8 /* BaseMineDataTableViewCell.m in Sources */,
@@ -2332,6 +2384,7 @@
 				50B538DC1F5D4D3600907784 /* UIView+Frame.m in Sources */,
 				502E70B21F6BA102007E2B44 /* BaseApplyForAskForWorkOverTimeViewController.m in Sources */,
 				50F648B31F56BB7600C083A6 /* BaseHomeViewController.m in Sources */,
+				50314B102010716D001DFC34 /* GTMBase64.m in Sources */,
 				50E1753D1F6F64780067F978 /* JTCalendarContentView.m in Sources */,
 				508BAC0D1F5F8BAF00A073A7 /* SDCycleScrollView.m in Sources */,
 				5092FEBA1F6A6983004F8ABE /* BaseMessageView.m in Sources */,
@@ -2388,6 +2441,7 @@
 				50E1753B1F6F64780067F978 /* JTCalendar.m in Sources */,
 				50C195291F5D423C00524123 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				5071AEF01F614AB300672786 /* BaseMessageDepartmentHeadView.m in Sources */,
+				50314B0E2010716D001DFC34 /* EncryptUtil.m in Sources */,
 				50F648531F564C3800C083A6 /* AppDelegate.m in Sources */,
 				50E1754B1F6F65390067F978 /* BaseScheduleViewController.m in Sources */,
 				50C1952B1F5D423C00524123 /* UIButton+AFNetworking.m in Sources */,
@@ -2402,6 +2456,7 @@
 				5092FEE81F6A8643004F8ABE /* IQTextView.m in Sources */,
 				504F8F571F5E8C3D00B51D1A /* TitleScrollView.m in Sources */,
 				50E175441F6F64780067F978 /* JTCircleView.m in Sources */,
+				50314B0120104BA1001DFC34 /* SvUDIDTools.m in Sources */,
 				50C0F5641F67E42D004C5214 /* BaseMineManagerViewController.m in Sources */,
 				50C4BC7C1F69298D0083171D /* BaseApplyForCollectionViewCell.m in Sources */,
 				50B538E71F5D514B00907784 /* BaseAppManager.m in Sources */,
@@ -2409,6 +2464,7 @@
 				50E1754E1F6F98660067F978 /* BaseScheduleCalerdarListView.m in Sources */,
 				5071AEE71F61464A00672786 /* BaseMessageOrganizeTableViewCell.m in Sources */,
 				50C195271F5D423C00524123 /* AFAutoPurgingImageCache.m in Sources */,
+				50314B0F2010716D001DFC34 /* Utility.m in Sources */,
 				50F6488F1F56567700C083A6 /* BaseTabBarViewController.m in Sources */,
 				50DE7B241F5C40E2004FCF7E /* ATAppUpdater.m in Sources */,
 				50C195231F5D423C00524123 /* AFSecurityPolicy.m in Sources */,
@@ -2481,7 +2537,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2489,7 +2547,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2530,7 +2592,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -2538,7 +2602,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -2570,6 +2638,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BaseProject/BaseProject.entitlements;
 				DEVELOPMENT_TEAM = 63LK6YYKE3;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BaseProject/ThirdKit/UMSocial/UMSocialSDK",
@@ -2615,6 +2684,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = BaseProject/BaseProject.entitlements;
 				DEVELOPMENT_TEAM = 63LK6YYKE3;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BaseProject/ThirdKit/UMSocial/UMSocialSDK",

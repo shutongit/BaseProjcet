@@ -66,6 +66,7 @@ typedef void(^NetworkStatus)(NetworkStatusType status);
 
 
 @class AFHTTPSessionManager;
+
 @interface BaseNetWorkServers : NSObject
 
 /**
@@ -125,13 +126,14 @@ typedef void(^NetworkStatus)(NetworkStatusType status);
 /**
  POST请求
  
- @param URL 请求地址
+ @param requestUrl 请求地址
  @param parameters 请求参数
  @param success 请求成功的回调
  @param failure 请求失败的回调
  @return 返回的对象可取消请求,调用cancel方法
  */
-+ (NSURLSessionTask *)POST:(NSString *)URL
++ (NSURLSessionTask *)POST:(NSString *)methodName
+                requestUrl: (NSString *)requestUrl
                 parameters:(id)parameters
                    success:(HttpRequestSuccess)success
                    failure:(HttpRequestFailed)failure;

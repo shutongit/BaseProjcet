@@ -84,15 +84,19 @@ SINGLETON_FOR_CLASS(BaseUserManager)
 }
 #pragma mark ————— 手动登录到服务器 —————
 -(void)loginToServer:(NSDictionary *)params completion:(loginBlock)completion{
-    
-    [BaseNetWorkServers POST:NSStringFormat(@"%@%@",URL_main,URL_user_login) parameters:params success:^(id responseObject) {
-        [self loginSuccess:responseObject completion:completion];
+    [BaseNetWorkServers POST:NSStringFormat(@"%@%@",URL_main,URL_user_login) requestUrl:@"" parameters:@"" success:^(NSDictionary *responseObject) {
         
     } failure:^(NSError *error) {
-        if (completion) {
-            completion(NO,error.localizedDescription);
-        }
+        
     }];
+//    [BaseNetWorkServers POST:NSStringFormat(@"%@%@",URL_main,URL_user_login) parameters:params success:^(id responseObject) {
+//        [self loginSuccess:responseObject completion:completion];
+//
+//    } failure:^(NSError *error) {
+//        if (completion) {
+//            completion(NO,error.localizedDescription);
+//        }
+//    }];
 }
 #pragma mark  ************** private method **************
 

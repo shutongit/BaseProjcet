@@ -9,6 +9,12 @@
 #import "BaseNetWorkServers.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "AESCommonCrypto.h"
+#import "SvUDIDTools.h"
+#import "GYDes.h"
+
+#define Ciphertext @"btO5OxUEelfxA63YVmI28pkKUM6+//9BAbg7eWE2aXkpunug4GlMZA=="
+#define DESKEY @"w86GhD2qCJAE959MKLrcEz1JRKL08Qwb"
+#define DESIV @"01234567"
 
 @implementation BaseNetWorkServers
 /**
@@ -65,19 +71,25 @@ static AFHTTPSessionManager *_sessionManager;
     return sessionTask;
 }
 // POST 请求
-+ (NSURLSessionTask *)POST:(NSString *)URL
-                parameters:(id)parameters
-                   success:(HttpRequestSuccess)success
-                   failure:(HttpRequestFailed)failure {
++ (NSURLSessionTask *)POST:(NSString *)methodName
+                        requestUrl: (NSString *)requestUrl
+                        parameters:(id)parameters
+                        success:(HttpRequestSuccess)success
+                        failure:(HttpRequestFailed)failure {
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:parameters];
+    [params setObject:requestUrl forKey:@"requestKey"];
+    NSString *urlString = [self jsonToDictionary:params];
+    urlString = [self addTerminalElementFromJsonString:urlString];
     
-    NSString *urlString = [self DictionaryConversionJson:parameters];
-
-    NSURLSessionTask *sessionTask = [_sessionManager POST:[NSString stringWithFormat:@"%@/%@",URL,urlString] parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+    //加密
+    NSString *DESKey = [GYDes decryptUseDES:Ciphertext andKey:DESKEY andIv:DESIV];
+    urlString = [GYDes encryptUseDES:urlString andKey:DESKey andIv:DESIV];
+    
+    NSURLSessionTask *sessionTask = [_sessionManager POST:[NSString stringWithFormat:@"%@",methodName] parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
         
         [[self allSessionTask]removeObject:task];
-//        [SoapXmlParseHelper rootNodeToString:responseObject]
         NSString *resuleStr = [self jsonToString:responseObject];
         DLog(@"responseObject = %@",resuleStr);
         NSData *resultData = [resuleStr dataUsingEncoding:NSUTF8StringEncoding];
@@ -154,6 +166,34 @@ static AFHTTPSessionManager *_sessionManager;
 }
 
 /**
+ 字典转字符串
+
+ @param dictionary 字典
+ @return return value description
+ */
++ (NSString *)jsonToDictionary:(NSDictionary *)dictionary
+{
+    NSError *parseError = nil;
+    NSString *jsonStr = @"";
+    if ([dictionary isKindOfClass:[NSDictionary class]]) {
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:&parseError];
+        jsonStr = [[NSString alloc]initWithData:jsonData encoding:NSUTF8StringEncoding];
+    }
+    return jsonStr;
+}
+
+/**
+ Json字符串转字典
+
+ @param JSONString JSONString description
+ @return return value description
+ */
++ (NSDictionary *)parseJSONStringToNSDictionary:(NSString *)JSONString {
+    NSData *JSONData = [JSONString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *responseJSON = [NSJSONSerialization JSONObjectWithData:JSONData options:NSJSONReadingMutableLeaves error:nil];
+    return responseJSON;
+}
+/**
  *  json转字符串
  */
 + (NSString *)jsonToString:(id)data {
@@ -161,6 +201,26 @@ static AFHTTPSessionManager *_sessionManager;
     NSError *parseError = nil;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:NSJSONWritingPrettyPrinted | NSJSONReadingMutableContainers error:&parseError];
     return [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+}
+
+//添加设备参数
++ (NSString *)addTerminalElementFromJsonString:(NSString *)requestString{
+    
+    NSMutableDictionary *Jsondic = [[NSMutableDictionary alloc] initWithDictionary:[self parseJSONStringToNSDictionary:requestString]];//[requestString objectFromJSONString]
+    //设备分辨率
+    [Jsondic setObject:[NSString stringWithFormat:@"%.0f*%.0f",KScreenWidth,KScreenHeight] forKey:@"terminalResolution"];
+    //设备类型
+    [Jsondic setObject:[[UIDevice currentDevice] model] forKey:@"terminalName"];
+    //设备号
+    [Jsondic setObject:[SvUDIDTools UDID]?[SvUDIDTools UDID]:@""  forKey:@"terminalKey"];
+    //系统版本号
+    NSString *systemVersion = @"";
+    systemVersion = [[[NSProcessInfo processInfo] operatingSystemVersionString] substringToIndex:[[[NSProcessInfo processInfo] operatingSystemVersionString] rangeOfString:@"（"].location];
+    
+    [Jsondic setObject:systemVersion forKey:@"terminalCode"];
+    //应用版本号
+    [Jsondic setObject:@"" forKey:@"systemCode"];
+    return [self jsonToDictionary:Jsondic];// [Jsondic JSONString];
 }
 #pragma mark  ************** 判断网络类型 **************  
 
